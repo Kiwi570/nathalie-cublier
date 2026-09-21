@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,200;0,300;0,400;1,200;1,300&family=Work+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"><link rel="icon" href="/favicon.svg" type="image/svg+xml"><meta property="og:type" content="website"><meta property="og:site_name" content="Nathalie Cublier"><meta property="og:image" content="https://static.wixstatic.com/media/890b5a_907b1bdf4c2745c1bc7b7e5aa56e5ca0~mv2.png/v1/fill/w_1200,h_1204,al_c,q_85/fleur.png"><meta name="theme-color" content="#FAFAF8"><link rel="stylesheet" href="/nc.css"><script src="/nc.js" defer></script>
+<title>Pièces singulières — Nathalie Cublier, encre de Chine</title>
+<meta name="description" content="Cinq tableaux qui sont aussi des objets : un miroir en fer forgé, des fossiles d'orthoceras, des papillons en relief, des miroirs sertis, une horloge qui donne l'heure.">
+</head>
+<body data-solid="1">
+<main>
+<section class="page-head">
+  <div class="wrap">
+    <span class="k">Le chapitre à part</span>
+    <h1 class="h-xl" style="margin-top:12px">Des tableaux qui sont<br><em>aussi des objets.</em></h1>
+    <p class="lead">Cinq pièces où l'encre rencontre autre chose : un miroir, des fossiles, du relief, une horloge. On les regarde, puis on s'en sert.</p>
+  </div>
+</section>
+<section class="sec" style="padding-top:20px"><div class="wrap" id="pieces"></div></section>
+<div class="cta-band"><div class="wrap"><div><h2>Un objet, un miroir, un souvenir à sertir ?</h2><p>Une pièce singulière peut aussi se commander.</p></div><a class="btn btn-w" href="/commander">Commander sur un thème</a></div></div>
+</main>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const ids = ['les-4-saisons','fossiles','envol-de-papillons','l-instant-fige','miroirs'];
+  document.getElementById('pieces').innerHTML = ids.map((id, i) => { const a = NC.byId(id); return '<article class="piece"><div class="pim" data-zoom="' + a.id + '" role="button" tabindex="0" aria-label="Voir le trait de ' + a.t + '"><img src="' + NC.src(a, 1200) + '" alt="' + a.t + '" loading="' + (i ? 'lazy' : 'eager') + '"></div><div><span class="no">' + ['I','II','III','IV','V'][i] + '</span><h2>' + a.t + '</h2><div class="what">' + a.rel + '</div><p>' + a.hist + '</p><p style="font-size:14px">' + (a.f || '') + '</p><div class="acts"><span class="st ' + a.st + '">' + NC.ST[a.st] + '</span><a class="btn btn-line" href="/tableau?id=' + a.id + '">La fiche</a>' + (a.st === 'dispo' ? '<a class="btn btn-sceau" href="/commander#demande?sujet=' + encodeURIComponent(a.t) + '">Demander cette pièce</a>' : '') + '</div></div></article>'; }).join('');
+  NC.bindZoom(document.getElementById('pieces'));
+});
+</script>
+</body>
+</html>

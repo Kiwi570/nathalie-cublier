@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,200;0,300;0,400;1,200;1,300&family=Work+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"><link rel="icon" href="/favicon.svg" type="image/svg+xml"><meta property="og:type" content="website"><meta property="og:site_name" content="Nathalie Cublier"><meta property="og:image" content="https://static.wixstatic.com/media/890b5a_907b1bdf4c2745c1bc7b7e5aa56e5ca0~mv2.png/v1/fill/w_1200,h_1204,al_c,q_85/fleur.png"><meta name="theme-color" content="#FAFAF8"><link rel="stylesheet" href="/nc.css"><script src="/nc.js" defer></script>
+<title>Les tableaux — Nathalie Cublier, encre de Chine</title>
+<meta name="description" content="Les 25 tableaux à l'encre de Chine de Nathalie Cublier, classés par thème : nature et fleurs, enfance, mer, musique et cinéma, formes et objets. Treize sont disponibles.">
+</head>
+<body data-solid="1">
+<main>
+<section class="page-head">
+  <div class="wrap">
+    <span class="k">La galerie</span>
+    <h1 class="h-xl" style="margin-top:12px">Vingt-cinq tableaux,<br><em>cinq thèmes.</em></h1>
+    <p class="lead">Survolez pour voir le trait de près, cliquez sur l'image pour l'agrandir au doigt ou à la molette, ouvrez la fiche pour l'histoire de la pièce. Les tableaux disponibles portent le sceau rouge.</p>
+    <div class="filters" id="filters" style="margin-top:26px"><button class="flt" aria-selected="true" data-f="all">Tous</button><button class="flt" aria-selected="false" data-f="dispo"><i></i>Disponibles</button><button class="flt" aria-selected="false" data-f="vendu">Vendus</button></div>
+    <nav class="theme-nav" id="theme-nav" aria-label="Aller à un thème"></nav>
+    <div class="hours-pill" style="margin-top:22px"><b id="total">0</b> heures de dessin, au moins, dans cette galerie</div>
+  </div>
+</section>
+<section class="sec" style="padding-top:0"><div class="wrap" id="themes"></div></section>
+<div class="cta-band"><div class="wrap"><div><h2>Aucun ne vous ressemble tout à fait ?</h2><p>Alors il n'existe pas encore. Proposez un thème, je le dessine.</p></div><a class="btn btn-w" href="/commander">Commander sur un thème</a></div></div>
+</main>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const order = ['nature','enfance','mer','arts','formes'], intro = {nature:'Pétales en couches, branches et papillons : le motif préféré de la plume.', enfance:'Ballons, rêves et prénoms. Souvent pour une chambre, ou une naissance.', mer:'Vagues en écailles et bancs de poissons en points serrés.', arts:'Portées, couverts, pellicule : les objets de nos plaisirs, en tangles.', formes:'Mandalas, miroirs, fossiles, horloge : quand le tableau devient un objet.'};
+  const box = document.getElementById('themes');
+  box.innerHTML = order.map(k => { const list = NC.WORKS.filter(w => w.th === k); return '<div class="theme" id="' + k + '"><h2>' + NC.TH[k] + '</h2><p class="lead">' + intro[k] + ' ' + list.length + ' tableau' + (list.length > 1 ? 'x' : '') + '.</p><div class="mas">' + list.map(NC.tile).join('') + '</div></div>'; }).join('');
+  document.getElementById('theme-nav').innerHTML = order.map(k => '<a href="#' + k + '">' + NC.TH[k] + '</a>').join('');
+  NC.bindLens(box); NC.bindZoom(box);
+  document.getElementById('filters').addEventListener('click', e => { const b = e.target.closest('.flt'); if (!b) return; const f = b.dataset.f; document.querySelectorAll('.flt').forEach(x => x.setAttribute('aria-selected', x === b)); document.querySelectorAll('.work').forEach(w => w.classList.toggle('hide', f !== 'all' && w.dataset.st !== f)); document.querySelectorAll('.theme').forEach(t => t.style.display = t.querySelector('.work:not(.hide)') ? '' : 'none'); });
+  // compteur : 100 h par toile au minimum, animé
+  const target = NC.WORKS.length * 100, el = document.getElementById('total'); let t0 = null;
+  const tick = now => { t0 = t0 || now; const p = Math.min(1, (now - t0)/1800); el.textContent = Math.round(target * p * p * (3 - 2*p)).toLocaleString('fr-FR'); if (p < 1) requestAnimationFrame(tick); };
+  if (NC.rm) el.textContent = target.toLocaleString('fr-FR'); else requestAnimationFrame(tick);
+});
+</script>
+</body>
+</html>
