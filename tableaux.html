@@ -8,30 +8,50 @@
 <body data-solid="1">
 <main>
 <section class="page-head">
-  <div class="wrap">
-    <span class="k">La galerie</span>
-    <h1 class="h-xl" style="margin-top:12px">Vingt-cinq tableaux,<br><em>cinq thèmes.</em></h1>
-    <p class="lead">Survolez pour voir le trait de près, cliquez sur l'image pour l'agrandir au doigt ou à la molette, ouvrez la fiche pour l'histoire de la pièce. Les tableaux disponibles portent le sceau rouge.</p>
-    <div class="filters" id="filters" style="margin-top:26px"><button class="flt" aria-selected="true" data-f="all">Tous</button><button class="flt" aria-selected="false" data-f="dispo"><i></i>Disponibles</button><button class="flt" aria-selected="false" data-f="vendu">Vendus</button></div>
-    <nav class="theme-nav" id="theme-nav" aria-label="Aller à un thème"></nav>
-    <div class="hours-pill" style="margin-top:22px"><b id="total">0</b> heures de dessin, au moins, dans cette galerie</div>
-  </div>
+<div class="wrap head-visual">
+<div>
+<span class="k">La galerie</span>
+<h1 class="h-xl" style="margin-top:12px">Vingt-cinq tableaux,<br><em>cinq thèmes.</em></h1>
+<p class="lead">Survolez pour voir le trait de près, cliquez sur l'image pour l'agrandir au doigt ou à la molette, ouvrez la fiche pour l'histoire de la pièce. Les tableaux disponibles portent le sceau rouge.</p>
+<div class="hours-pill" style="margin-top:22px"><b id="total">0</b> heures de dessin, au moins, dans cette galerie</div>
+</div>
+<div class="vis"><img src="/images/macro-encre.jpg" alt="Le trait à l'encre de Chine vu de très près, sur la toile" fetchpriority="high"><span>Le trait, vu de près</span></div>
+</div>
 </section>
-<section class="sec" style="padding-top:0"><div class="wrap" id="themes"></div></section>
+<section class="sec" style="padding-top:0"><div class="wrap">
+<div class="toolbar" id="toolbar">
+  <nav class="theme-nav" id="theme-nav" aria-label="Aller à un thème"></nav>
+  <button class="sw" id="sw-dispo" aria-pressed="false" type="button"><i></i>Disponibles seulement</button>
+  <div class="seg" role="group" aria-label="Vue"><button aria-pressed="true" data-v="tab" type="button">Tableaux</button><button aria-pressed="false" data-v="trait" type="button">Trait</button></div>
+</div>
+<div id="themes"></div>
+<div class="chapitre" id="singulieres">
+  <div class="sec-head"><div><span class="k">Le chapitre à part</span><h2 class="h-l" style="margin-top:8px">Des tableaux qui sont <em>aussi des objets.</em></h2></div><p class="lead">Un miroir, des fossiles, du relief, une horloge. On les regarde, puis on s'en sert.</p></div>
+  <div id="pieces"></div>
+</div>
+</div></section>
 <div class="cta-band"><div class="wrap"><div><h2>Aucun ne vous ressemble tout à fait ?</h2><p>Alors il n'existe pas encore. Proposez un thème, je le dessine.</p></div><a class="btn btn-w" href="/commander">Commander sur un thème</a></div></div>
 </main>
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-  const order = ['nature','enfance','mer','arts','formes'], intro = {nature:'Pétales en couches, branches et papillons : le motif préféré de la plume.', enfance:'Ballons, rêves et prénoms. Souvent pour une chambre, ou une naissance.', mer:'Vagues en écailles et bancs de poissons en points serrés.', arts:'Portées, couverts, pellicule : les objets de nos plaisirs, en tangles.', formes:'Mandalas, miroirs, fossiles, horloge : quand le tableau devient un objet.'};
-  const box = document.getElementById('themes');
-  box.innerHTML = order.map(k => { const list = NC.WORKS.filter(w => w.th === k); return '<div class="theme" id="' + k + '"><h2>' + NC.TH[k] + '</h2><p class="lead">' + intro[k] + ' ' + list.length + ' tableau' + (list.length > 1 ? 'x' : '') + '.</p><div class="mas">' + list.map(NC.tile).join('') + '</div></div>'; }).join('');
-  document.getElementById('theme-nav').innerHTML = order.map(k => '<a href="#' + k + '">' + NC.TH[k] + '</a>').join('');
-  NC.bindLens(box); NC.bindZoom(box);
-  document.getElementById('filters').addEventListener('click', e => { const b = e.target.closest('.flt'); if (!b) return; const f = b.dataset.f; document.querySelectorAll('.flt').forEach(x => x.setAttribute('aria-selected', x === b)); document.querySelectorAll('.work').forEach(w => w.classList.toggle('hide', f !== 'all' && w.dataset.st !== f)); document.querySelectorAll('.theme').forEach(t => t.style.display = t.querySelector('.work:not(.hide)') ? '' : 'none'); });
-  // compteur : 100 h par toile au minimum, animé
-  const target = NC.WORKS.length * 100, el = document.getElementById('total'); let t0 = null;
-  const tick = now => { t0 = t0 || now; const p = Math.min(1, (now - t0)/1800); el.textContent = Math.round(target * p * p * (3 - 2*p)).toLocaleString('fr-FR'); if (p < 1) requestAnimationFrame(tick); };
-  if (NC.rm) el.textContent = target.toLocaleString('fr-FR'); else requestAnimationFrame(tick);
+const order = ['nature','enfance','mer','arts','formes'], intro = {nature:'Pétales en couches, branches et papillons : le motif préféré de la plume.', enfance:'Ballons, rêves et prénoms. Souvent pour une chambre, ou une naissance.', mer:'Vagues en écailles et bancs de poissons en points serrés.', arts:'Portées, couverts, pellicule : les objets de nos plaisirs, en tangles.', formes:'Mandalas, miroirs, fossiles, horloge : quand le tableau devient un objet.'};
+const box = document.getElementById('themes');
+box.innerHTML = order.map(k => { const list = NC.WORKS.filter(w => w.th === k); return '<div class="theme" id="' + k + '"><h2>' + NC.TH[k] + '</h2><p class="lead">' + intro[k] + ' ' + list.length + ' tableau' + (list.length > 1 ? 'x' : '') + '.</p><div class="mas">' + list.map(NC.tile).join('') + '</div></div>'; }).join('');
+const nav = document.getElementById('theme-nav'); nav.innerHTML = order.map(k => '<a href="#' + k + '">' + NC.TH[k] + '</a>').join('');
+document.getElementById('pieces').innerHTML = NC.PIECES.map((id, i) => NC.pieceHTML(NC.byId(id), i)).join('');
+NC.bindLens(box); NC.bindZoom(box); NC.bindZoom(document.getElementById('pieces'));
+/* sommaire qui suit le défilement */
+const links = [...nav.querySelectorAll('a')];
+addEventListener('scroll', () => { let cur = -1; order.forEach((k, i) => { const el = document.getElementById(k); if (el && el.getBoundingClientRect().top < innerHeight * .35) cur = i; }); links.forEach((a, i) => a.classList.toggle('on', i === cur)); }, {passive:true});
+/* disponibles seulement */
+const sw = document.getElementById('sw-dispo');
+sw.addEventListener('click', () => { const on = sw.getAttribute('aria-pressed') !== 'true'; sw.setAttribute('aria-pressed', on); document.querySelectorAll('.work').forEach(w => w.classList.toggle('hide', on && w.dataset.st !== 'dispo')); document.querySelectorAll('.theme').forEach(t => t.style.display = t.querySelector('.work:not(.hide)') ? '' : 'none'); });
+/* vue trait */
+document.querySelectorAll('[data-v]').forEach(b => b.addEventListener('click', () => { document.querySelectorAll('[data-v]').forEach(x => x.setAttribute('aria-pressed', x === b)); document.querySelectorAll('.mas').forEach(m => m.classList.toggle('trait', b.dataset.v === 'trait')); }));
+/* compteur d'heures */
+const target = NC.WORKS.reduce((s, a) => s + NC.hrs(a), 0), el = document.getElementById('total'); let t0 = null;
+const tick = now => { t0 = t0 || now; const p = Math.min(1, (now - t0)/1800); el.textContent = Math.round(target * p * p * (3 - 2*p)).toLocaleString('fr-FR'); if (p < 1) requestAnimationFrame(tick); };
+if (NC.rm) el.textContent = target.toLocaleString('fr-FR'); else requestAnimationFrame(tick);
 });
 </script>
 </body>

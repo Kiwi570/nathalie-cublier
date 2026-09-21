@@ -15,7 +15,7 @@
     </div>
     <div class="c-grid">
       <div>
-        <span class="k">Quel thème vous inspire ?</span>
+        <span class="k">Pas 1 · Quel thème vous inspire ?</span>
         <div class="themes" id="themes" style="margin-top:14px"></div>
         <div class="free"><input type="text" id="free" placeholder="Ou le vôtre : un prénom, un lieu, un souvenir…" aria-label="Votre thème"><button class="btn btn-w" id="free-go" type="button">Ok</button></div>
         <p style="font-size:13.5px;color:rgba(255,255,255,.5);margin-top:16px">« Charlie » est né d'une commande pour un cadeau de naissance : le prénom structure le tableau, les tangles le remplissent.</p>
@@ -25,24 +25,31 @@
         <div class="v"><span class="k">Proposition pour</span><h3 id="p-t"></h3><p id="p-d"></p><div class="tangles" id="p-tg"></div><div class="ref" id="p-ref"></div><a class="btn btn-w" href="#demande" id="p-btn">Demander ce tableau</a></div>
       </div>
     </div>
-  </div>
+  
+    <div class="pas" id="pas" style="display:none">
+      <div class="p"><span class="k">Pas 2 · Le format</span><div class="fmts" id="fmts"></div></div>
+      <div class="p"><span class="k">Pas 3 · Le temps</span><b id="e-h">—</b><small id="e-j">Choisissez un format</small><small id="e-d"></small></div>
+      <div class="p"><span class="k">Prix indicatif</span><b id="e-p">—</b><small>Fourchette selon le temps de travail, encadrement compris. Confirmé avant le premier trait.</small><a class="btn btn-w" href="#demande" id="e-go" style="margin-top:10px;justify-self:start">Demander ce tableau</a></div>
+    </div>
+    <div id="e-wall" style="display:none;margin-top:16px"><div class="echelle" id="e-ech"></div><div id="e-murs"></div></div>
+</div>
 </section>
 
 <section class="sec" id="methode">
   <div class="wrap">
     <div class="sec-head"><h2 class="h-l"><span class="stroke">Un tableau, en quatre temps.</span></h2><p class="lead">Pas d'esquisse au crayon qu'on efface : à l'encre, chaque trait reste. C'est ce qui rend le temps visible.</p></div>
     <div class="meth">
-      <div class="mt"><svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="22"/><path d="M32 10v44M10 32h44"/></svg><span class="n">I</span><h3>Le thème</h3><p>La mer, la cuisine, la musique, l'enfance, un prénom. Choisi par moi, ou proposé par vous.</p></div>
-      <div class="mt"><svg viewBox="0 0 64 64"><path d="M12 12h40v40H12zM12 32h40M32 12v40M12 12l40 40M52 12L12 52"/></svg><span class="n">II</span><h3>La structure</h3><p>Des lignes légères divisent la toile en zones, comme des parcelles. C'est la carte du tableau.</p></div>
-      <div class="mt"><svg viewBox="0 0 64 64"><path d="M8 20c8-8 16 8 24 0s16 8 24 0M8 32c8-8 16 8 24 0s16 8 24 0M8 44c8-8 16 8 24 0s16 8 24 0"/><circle cx="16" cy="54" r="3"/><circle cx="32" cy="54" r="3"/><circle cx="48" cy="54" r="3"/></svg><span class="n">III</span><h3>Les tangles</h3><p>Chaque zone reçoit un motif répété, trait après trait, à la plume. Une zone peut demander une journée.</p></div>
-      <div class="mt"><svg viewBox="0 0 64 64"><rect x="8" y="8" width="48" height="48"/><rect x="16" y="16" width="32" height="32"/><path d="M8 8l8 8M56 8l-8 8M8 56l8-8M56 56l-8-8"/></svg><span class="n">IV</span><h3>L'encadrement</h3><p>Toujours confié à un professionnel. Le tableau arrive prêt à accrocher.</p></div>
+      <div class="mt"><div class="pic"><img src="/images/cadre-enfance.jpg" alt="Un tableau sur le thème de l'enfance, encadré" loading="lazy"></div><svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="22"/></svg><span class="n">I</span><h3>Le thème</h3><p>La mer, la cuisine, la musique, l'enfance, un prénom. Choisi par moi, ou proposé par vous.</p></div>
+      <div class="mt"><div class="pic"><img src="/images/structure.jpg" alt="Une toile blanche avec ses lignes de structure, la plume et l'encre" loading="lazy"></div><svg viewBox="0 0 64 64"><path d="M12 12h40v40H12z"/></svg><span class="n">II</span><h3>La structure</h3><p>Des lignes légères divisent la toile en zones, comme des parcelles. C'est la carte du tableau.</p></div>
+      <div class="mt"><div class="pic"><img src="/images/le-trait.jpg" alt="La plume qui dessine un motif d'écailles à l'encre" loading="lazy"></div><svg viewBox="0 0 64 64"><path d="M8 20c8-8 16 8 24 0s16 8 24 0"/></svg><span class="n">III</span><h3>Les tangles</h3><p>Chaque zone reçoit un motif répété, trait après trait, à la plume. Une zone peut demander une journée.</p></div>
+      <div class="mt"><div class="pic"><img src="/images/cadre-mer.jpg" alt="Un tableau encadré, prêt à accrocher" loading="lazy"></div><svg viewBox="0 0 64 64"><rect x="8" y="8" width="48" height="48"/></svg><span class="n">IV</span><h3>L'encadrement</h3><p>Toujours confié à un professionnel. Le tableau arrive prêt à accrocher.</p></div>
     </div>
   </div>
 </section>
 
 <section class="sec" id="demande" style="padding-top:0">
   <div class="wrap">
-    <div class="sec-head"><h2 class="h-l"><span class="stroke">Demander un tableau.</span></h2><p class="lead">Une pièce disponible, la toile en cours, ou un thème à vous : dites-le simplement, je réponds moi-même.</p></div>
+    <div class="sec-head"><h2 class="h-l"><span class="stroke">Pas 4 · Demander un tableau.</span></h2><p class="lead">Une pièce disponible, la toile en cours, ou un thème à vous : dites-le simplement, je réponds moi-même.</p></div>
     <div class="ct-grid">
       <div class="coord">
         <div class="box"><b>Où</b><p>Près de Cannes, Alpes-Maritimes. Remise en main propre, ou envoi encadré partout en France.</p></div>
@@ -78,11 +85,20 @@ document.addEventListener('DOMContentLoaded', () => {
   themes.innerHTML = Object.keys(TH).map(k => '<button class="th" type="button" aria-pressed="false">' + k + '</button>').join('');
   const propose = name => { const t = TH[name] || {d:'« ' + name + ' » : je commence par chercher ce que ce thème contient de formes répétables, puis je découpe la toile en zones. On en parle ensemble avant le premier trait.', t:['grid','spiral'], ref:'mandalas'}; const r = NC.byId(t.ref); document.querySelectorAll('.th').forEach(b => b.setAttribute('aria-pressed', b.textContent === name)); prop.classList.add('has'); document.getElementById('p-t').textContent = name; document.getElementById('p-d').textContent = t.d; document.getElementById('p-tg').innerHTML = t.t.map(k => '<svg viewBox="0 0 64 64">' + TG[k] + '</svg>').join(''); document.getElementById('p-ref').innerHTML = '<img src="' + NC.src(r, 200) + '" alt=""><div>Un tableau déjà fait sur ce terrain<b>' + r.t + '</b></div>'; sujet.value = name; document.querySelector('input[name=t][value=theme]').checked = true; if (innerWidth < 900) prop.scrollIntoView({behavior: NC.rm ? 'auto' : 'smooth', block:'start'}); };
   themes.addEventListener('click', e => { const b = e.target.closest('.th'); if (b) propose(b.textContent); });
-  const free = document.getElementById('free'); document.getElementById('free-go').onclick = () => { if (free.value.trim()) propose(free.value.trim()); }; free.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); document.getElementById('free-go').click(); } });
+  /* Pas 2 et 3 : le format décide des heures, du délai et du prix */
+  const FMT = [['30 × 40 cm', 30, 40], ['50 × 60 cm', 50, 60], ['80 × 80 cm', 80, 80], ['100 × 100 cm', 100, 100], ['120 × 40 cm', 120, 40]];
+  const pas = document.getElementById('pas'), fmts = document.getElementById('fmts'), wall = document.getElementById('e-wall');
+  fmts.innerHTML = FMT.map(([n], i) => '<button class="th" type="button" aria-pressed="false" data-i="' + i + '">' + n + '</button>').join('');
+  let ech = null, curTheme = '';
+  const showPas = () => { pas.style.display = ''; wall.style.display = ''; if (!ech) { ech = NC.echelle(document.getElementById('e-ech'), NC.byId('fleur-eternelle')); document.getElementById('e-murs').innerHTML = NC.mursHTML(); NC.bindMurs(document.getElementById('e-murs'), document.getElementById('e-ech')); } };
+  fmts.addEventListener('click', e => { const b = e.target.closest('.th'); if (!b) return; const [n, w, h] = FMT[+b.dataset.i]; document.querySelectorAll('#fmts .th').forEach(x => x.setAttribute('aria-pressed', x === b)); const hrs = Math.round(100 + Math.min(100, w*h/64)), [p1, p2] = NC.prix(hrs); document.getElementById('e-h').textContent = 'Environ ' + hrs + ' h'; document.getElementById('e-j').textContent = NC.jours(hrs); document.getElementById('e-d').textContent = 'Livraison sous ' + Math.ceil(hrs/25 + 3) + ' à ' + Math.ceil(hrs/15 + 3) + ' semaines, encadrement compris.'; document.getElementById('e-p').textContent = NC.eur(p1) + ' à ' + NC.eur(p2); ech.set(w, h); const sel = document.querySelector('select[name=fmt]'); if (sel) { const opt = [...sel.options].find(o => (w >= 100 && /Grand|Panorami/.test(o.text) && (w > h ? /Panorami/.test(o.text) : /Grand/.test(o.text))) || (w >= 80 && w < 100 && /Grand/.test(o.text)) || (w >= 50 && w < 80 && /Moyen/.test(o.text)) || (w < 50 && /Petit/.test(o.text))); if (opt) sel.value = opt.value; } document.querySelector('input[name=t][value=theme]').checked = true; });
+  const _propose = propose; const proposeAll = name => { _propose(name); curTheme = name; showPas(); sujet.value = name; document.querySelector('input[name=t][value=theme]').checked = true; };
+  themes.addEventListener('click', e => { const b = e.target.closest('.th'); if (b) { curTheme = b.textContent; showPas(); sujet.value = b.textContent; document.querySelector('input[name=t][value=theme]').checked = true; } });
+  const free = document.getElementById('free'); document.getElementById('free-go').onclick = () => { if (free.value.trim()) { propose(free.value.trim()); curTheme = free.value.trim(); showPas(); sujet.value = curTheme; document.querySelector('input[name=t][value=theme]').checked = true; } }; free.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); document.getElementById('free-go').click(); } });
   // arrivée depuis une fiche : thème ou sujet préremplis
   const q = new URLSearchParams(location.search), hq = new URLSearchParams((location.hash.split('?')[1] || ''));
   const map = {'Nature et fleurs':'Les fleurs', "L'enfance":"L'enfance", 'La mer et les voyages':'La mer', 'La table, la musique, le cinéma':'La musique', 'Formes, miroirs et objets':'Un objet'};
-  if (q.get('theme')) propose(map[q.get('theme')] || q.get('theme'));
+  if (q.get('theme')) { const n = map[q.get('theme')] || q.get('theme'); propose(n); curTheme = n; showPas(); sujet.value = n; document.querySelector('input[name=t][value=theme]').checked = true; }
   if (hq.get('sujet')) { sujet.value = hq.get('sujet'); document.querySelector('input[name=t][value=dispo]').checked = true; setTimeout(() => document.getElementById('demande').scrollIntoView({behavior: NC.rm ? 'auto' : 'smooth'}), 300); }
 });
 </script>

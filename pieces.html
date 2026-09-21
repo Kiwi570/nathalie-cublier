@@ -8,10 +8,13 @@
 <body data-solid="1">
 <main>
 <section class="page-head">
-  <div class="wrap">
+  <div class="wrap head-visual">
+    <div>
     <span class="k">Le chapitre à part</span>
     <h1 class="h-xl" style="margin-top:12px">Des tableaux qui sont<br><em>aussi des objets.</em></h1>
     <p class="lead">Cinq pièces où l'encre rencontre autre chose : un miroir, des fossiles, du relief, une horloge. On les regarde, puis on s'en sert.</p>
+    </div>
+    <div class="vis"><img src="/images/mandala-miroir.jpg" alt="Un mandala à l'encre autour d'un miroir rond" fetchpriority="high"><span>Un miroir serti dans l'encre</span></div>
   </div>
 </section>
 <section class="sec" style="padding-top:20px"><div class="wrap" id="pieces"></div></section>
@@ -19,8 +22,8 @@
 </main>
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-  const ids = ['les-4-saisons','fossiles','envol-de-papillons','l-instant-fige','miroirs'];
-  document.getElementById('pieces').innerHTML = ids.map((id, i) => { const a = NC.byId(id); return '<article class="piece"><div class="pim" data-zoom="' + a.id + '" role="button" tabindex="0" aria-label="Voir le trait de ' + a.t + '"><img src="' + NC.src(a, 1200) + '" alt="' + a.t + '" loading="' + (i ? 'lazy' : 'eager') + '"></div><div><span class="no">' + ['I','II','III','IV','V'][i] + '</span><h2>' + a.t + '</h2><div class="what">' + a.rel + '</div><p>' + a.hist + '</p><p style="font-size:14px">' + (a.f || '') + '</p><div class="acts"><span class="st ' + a.st + '">' + NC.ST[a.st] + '</span><a class="btn btn-line" href="/tableau?id=' + a.id + '">La fiche</a>' + (a.st === 'dispo' ? '<a class="btn btn-sceau" href="/commander#demande?sujet=' + encodeURIComponent(a.t) + '">Demander cette pièce</a>' : '') + '</div></div></article>'; }).join('');
+
+  document.getElementById('pieces').innerHTML = NC.PIECES.map((id, i) => NC.pieceHTML(NC.byId(id), i)).join('');
   NC.bindZoom(document.getElementById('pieces'));
 });
 </script>
