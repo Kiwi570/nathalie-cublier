@@ -1,0 +1,609 @@
+@import 'tailwindcss';
+
+@theme inline {
+  --font-sans: var(--font-geist);
+  --font-serif: var(--font-fraunces), Georgia, 'Times New Roman', serif;
+  --color-paper: #faf9f5;
+  --color-mist: #efede7;
+  --color-stone: #d9d4ca;
+  --color-ink: #171716;
+  --color-vermilion: #a93d2d;
+  --color-clay: #c9a996;
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+* {
+  box-sizing: border-box;
+}
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 96px;
+}
+body {
+  min-width: 320px;
+  margin: 0;
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-geist), Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+/* Grain papier très léger, posé au-dessus de tout (statique, donc quasi gratuit) */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  pointer-events: none;
+  opacity: 0.07;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.9 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 220px 220px;
+}
+a,
+button,
+input,
+textarea,
+select {
+  outline-color: var(--color-vermilion);
+}
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+button,
+[role='button'],
+summary {
+  cursor: pointer;
+}
+::selection {
+  background: var(--color-ink);
+  color: var(--color-paper);
+}
+.skip-link {
+  position: fixed;
+  left: 1rem;
+  top: -5rem;
+  z-index: 100;
+  border-radius: 999px;
+  background: var(--color-ink);
+  color: white;
+  padding: 0.75rem 1rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+.skip-link:focus {
+  top: 1rem;
+}
+
+/* ---------- Navigation ---------- */
+.nav-link {
+  position: relative;
+  padding-block: 0.5rem;
+  color: color-mix(in srgb, var(--color-ink) 58%, transparent);
+  font-size: 0.8rem;
+  font-weight: 700;
+  transition: color 260ms ease;
+}
+.nav-link::after {
+  content: '';
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
+  height: 1px;
+  background: var(--color-vermilion);
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 480ms var(--ease-out-expo);
+}
+.nav-link:hover,
+.nav-link.is-active {
+  color: var(--color-ink);
+}
+.nav-link:hover::after,
+.nav-link.is-active::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+/* ---------- Boutons ---------- */
+.button-dark,
+.button-light,
+.button-line,
+.button-ghost {
+  display: inline-flex;
+  min-height: 3rem;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  border-radius: 999px;
+  padding-inline: 1.25rem;
+  font-size: 0.82rem;
+  font-weight: 750;
+  transition:
+    transform 360ms var(--ease-out-expo),
+    background 280ms ease,
+    border-color 280ms ease,
+    color 280ms ease,
+    box-shadow 360ms ease;
+}
+.button-dark svg,
+.button-light svg,
+.button-line svg,
+.button-ghost svg {
+  transition: transform 460ms var(--ease-out-expo);
+}
+.button-dark:hover .lucide-arrow-right,
+.button-light:hover .lucide-arrow-right,
+.button-line:hover .lucide-arrow-right,
+.button-ghost:hover .lucide-arrow-right {
+  transform: translateX(4px);
+}
+.button-dark:hover .lucide-arrow-up-right,
+.button-light:hover .lucide-arrow-up-right,
+.button-line:hover .lucide-arrow-up-right,
+.button-ghost:hover .lucide-arrow-up-right {
+  transform: translate(3px, -3px);
+}
+.button-dark:active,
+.button-light:active,
+.button-line:active,
+.button-ghost:active {
+  transform: translateY(0) scale(0.97);
+}
+.button-dark {
+  background: var(--color-ink);
+  color: white;
+  border: 1px solid var(--color-ink);
+}
+.button-dark:hover {
+  background: var(--color-vermilion);
+  border-color: var(--color-vermilion);
+  transform: translateY(-2px);
+  box-shadow: 0 16px 40px rgba(169, 61, 45, 0.25);
+}
+.button-light {
+  background: white;
+  color: var(--color-ink);
+  border: 1px solid white;
+}
+.button-light:hover {
+  transform: translateY(-2px);
+  background: var(--color-paper);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.18);
+}
+.button-line {
+  border: 1px solid color-mix(in srgb, var(--color-ink) 18%, transparent);
+  color: var(--color-ink);
+}
+.button-line:hover {
+  background: white;
+  border-color: var(--color-ink);
+  transform: translateY(-2px);
+}
+/* Variante pour fonds sombres */
+.button-ghost {
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  color: white;
+}
+.button-ghost:hover {
+  border-color: var(--color-clay);
+  background: rgba(255, 255, 255, 0.08);
+  transform: translateY(-2px);
+}
+
+/* ---------- Typographie ---------- */
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: var(--color-vermilion);
+  font-size: 0.62rem;
+  font-weight: 800;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+.eyebrow::before {
+  content: '';
+  width: 2.5rem;
+  height: 1px;
+  background: currentColor;
+}
+.footer-title {
+  font-size: 0.62rem;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-clay);
+}
+.footer-link {
+  width: fit-content;
+  transition:
+    color 260ms ease,
+    transform 460ms var(--ease-out-expo);
+}
+.footer-link:hover {
+  color: white;
+  transform: translateX(4px);
+}
+
+/* ---------- Surfaces ---------- */
+.shadow-paper {
+  box-shadow: 0 25px 70px rgba(23, 23, 22, 0.07);
+}
+/* Carte papier : se soulève au survol (utiliser dans un parent .group) */
+.paper-card {
+  box-shadow: 0 25px 70px rgba(23, 23, 22, 0.07);
+  transition:
+    transform 900ms var(--ease-out-expo),
+    box-shadow 900ms var(--ease-out-expo);
+}
+.group:hover .paper-card,
+a.paper-card:hover {
+  transform: translateY(-7px);
+  box-shadow: 0 45px 90px rgba(23, 23, 22, 0.14);
+}
+.stroke-bg {
+  background-image: repeating-linear-gradient(115deg, transparent 0 7px, rgba(23, 23, 22, 0.03) 7px 8px);
+}
+
+/* ---------- Contrôles ---------- */
+.choice,
+.choice-dark {
+  border: 1px solid rgba(23, 23, 22, 0.14);
+  border-radius: 999px;
+  padding: 0.65rem 0.9rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  transition:
+    background 280ms ease,
+    border-color 280ms ease,
+    color 280ms ease,
+    transform 280ms var(--ease-out-expo);
+}
+.choice:active,
+.choice-dark:active {
+  transform: scale(0.96);
+}
+.choice:hover {
+  border-color: var(--color-ink);
+}
+.choice.is-on,
+.choice[aria-pressed='true'] {
+  background: var(--color-ink);
+  border-color: var(--color-ink);
+  color: white;
+}
+.choice-dark {
+  border-color: rgba(255, 255, 255, 0.15);
+  color: rgba(255, 255, 255, 0.62);
+}
+.choice-dark:hover {
+  border-color: var(--color-clay);
+  color: white;
+}
+.choice-dark.is-on,
+.choice-dark[aria-pressed='true'] {
+  border-color: var(--color-clay);
+  background: rgba(255, 255, 255, 0.08);
+  color: white;
+}
+.field {
+  transition:
+    border-color 280ms ease,
+    box-shadow 280ms ease,
+    background 280ms ease;
+}
+.field:focus {
+  outline: none;
+  border-color: var(--color-clay);
+  box-shadow: 0 0 0 3px rgba(201, 169, 150, 0.22);
+}
+
+/* ============================================================
+   MOTION KIT — version « encre » (rythme plus lent)
+   Entrées au chargement en CSS pur ; entrées au scroll via
+   <Reveal /> (masquage conditionné à la classe .js du layout).
+   ============================================================ */
+
+.page-enter {
+  animation: page-enter 700ms var(--ease-out-expo) backwards;
+}
+@keyframes page-enter {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 30px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.96) translate3d(0, 20px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.anim-rise {
+  animation: rise-in 1.2s var(--ease-out-expo) backwards;
+}
+.anim-scale {
+  animation: scale-in 1.5s var(--ease-out-expo) backwards;
+}
+.anim-fade {
+  animation: fade-in 1s ease backwards;
+}
+.hero-seq > :not(h1, .no-seq) {
+  animation: rise-in 1.3s var(--ease-out-expo) backwards;
+}
+
+/* Titres révélés ligne par ligne (Lines.tsx) */
+.line-mask {
+  display: block;
+  overflow: hidden;
+  padding: 0.24em 0.32em;
+  margin: -0.24em -0.32em;
+}
+.line-mask > span {
+  display: block;
+  transform-origin: 0 100%;
+  animation: line-up 1.5s var(--ease-out-expo) backwards;
+}
+@keyframes line-up {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 135%, 0) rotate(2deg);
+  }
+  35% {
+    opacity: 1;
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Le trait : anneau ou soulignement d'encre qui se dessine (InkStroke.tsx) */
+.ink-stroke {
+  position: relative;
+  display: inline-block;
+}
+.ink-stroke svg {
+  position: absolute;
+  overflow: visible;
+  pointer-events: none;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.6px;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.ink-stroke path {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: ink-draw 1.6s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+  animation-delay: var(--ink-delay, 1.3s);
+}
+.ink-ring svg {
+  left: -8%;
+  top: -23%;
+  width: 116%;
+  height: 146%;
+}
+.ink-underline svg {
+  left: -2%;
+  bottom: -0.12em;
+  width: 104%;
+  height: 0.28em;
+}
+@keyframes ink-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* Vue plein écran d'une œuvre (ArtworkViewer.tsx) */
+.artwork-dialog {
+  border: 0;
+  border-radius: 0;
+}
+.artwork-dialog::backdrop {
+  background: rgba(23, 23, 22, 0.8);
+  backdrop-filter: blur(6px);
+}
+.artwork-dialog[open] {
+  animation: fade-in 400ms ease;
+}
+
+/* Feuille qui flotte (propriété translate : n'entre pas en conflit avec rotate/transform) */
+.float {
+  animation: float 8s ease-in-out infinite;
+}
+@keyframes float {
+  50% {
+    translate: 0 -9px;
+  }
+}
+
+/* Reveal au scroll (Reveal.tsx) */
+.js [data-reveal]:not([data-stagger]):not(.is-in) {
+  opacity: 0;
+  transform: translate3d(0, var(--ry, 28px), 0) scale(var(--rs, 1));
+}
+.js [data-reveal][data-stagger]:not(.is-in) > * {
+  opacity: 0;
+  transform: translate3d(0, var(--ry, 28px), 0) scale(var(--rs, 1));
+}
+[data-reveal]:not([data-stagger]) {
+  transition:
+    opacity 1.3s var(--ease-out-expo),
+    transform 1.3s var(--ease-out-expo);
+}
+[data-reveal][data-stagger] > * {
+  transition:
+    opacity 1.3s var(--ease-out-expo),
+    transform 1.3s var(--ease-out-expo);
+}
+/* Barre de progression qui se remplit quand sa section apparaît */
+.bar-fill {
+  transform-origin: left;
+  transition: transform 1.8s var(--ease-out-expo) 400ms;
+}
+.js [data-reveal]:not(.is-in) .bar-fill {
+  transform: scaleX(0);
+}
+
+/* Cascade d'entrée d'une grille */
+.stagger-in > * {
+  animation: rise-in 1.1s var(--ease-out-expo) backwards;
+}
+
+/* Feedbacks */
+@keyframes pop {
+  0% {
+    transform: scale(0.6);
+  }
+  60% {
+    transform: scale(1.25);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+.animate-pop {
+  animation: pop 520ms var(--ease-spring);
+}
+
+/* Menu mobile animé */
+.mobile-nav {
+  display: grid;
+}
+@media (min-width: 64rem) {
+  .mobile-nav {
+    display: none;
+  }
+}
+.mobile-nav {
+  grid-template-rows: 0fr;
+  border-top: 1px solid transparent;
+  transition:
+    grid-template-rows 680ms var(--ease-out-expo),
+    border-color 300ms ease;
+}
+.mobile-nav.is-open {
+  grid-template-rows: 1fr;
+  border-top-color: rgba(23, 23, 22, 0.1);
+}
+.mobile-nav > * {
+  min-height: 0;
+  overflow: hidden;
+}
+.mobile-nav a {
+  opacity: 0;
+  transform: translate3d(0, 14px, 0);
+  transition:
+    opacity 500ms ease,
+    transform 700ms var(--ease-out-expo),
+    background 200ms ease;
+}
+.mobile-nav.is-open a {
+  opacity: 1;
+  transform: none;
+}
+.burger {
+  position: relative;
+  display: block;
+  width: 18px;
+  height: 12px;
+}
+.burger span {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 1.5px;
+  border-radius: 2px;
+  background: currentColor;
+  transition:
+    transform 560ms var(--ease-out-expo),
+    top 260ms ease;
+}
+.burger span:first-child {
+  top: 0;
+}
+.burger span:last-child {
+  top: 10px;
+}
+.is-open .burger span:first-child {
+  top: 5px;
+  transform: rotate(45deg);
+}
+.is-open .burger span:last-child {
+  top: 5px;
+  transform: rotate(-45deg);
+}
+
+/* Parallax piloté par le scroll (progressif ; le conteneur doit être overflow-clip) */
+@supports (animation-timeline: scroll()) {
+  .parallax {
+    scale: 1.16;
+    animation: parallax linear both;
+    animation-timeline: view();
+    animation-range: entry 0% exit 100%;
+  }
+}
+@keyframes parallax {
+  from {
+    transform: translate3d(0, -7%, 0);
+  }
+  to {
+    transform: translate3d(0, 7%, 0);
+  }
+}
+
+/* ---------- Mouvement réduit ---------- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .js [data-reveal]:not(.is-in),
+  .js [data-reveal][data-stagger]:not(.is-in) > *,
+  .js [data-reveal]:not(.is-in) .bar-fill {
+    opacity: 1;
+    transform: none;
+  }
+  .float,
+  .parallax {
+    animation: none;
+  }
+  .parallax {
+    scale: none;
+  }
+}

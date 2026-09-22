@@ -1,24 +1,49 @@
-# Nathalie Cublier — site
+# Nathalie Cublier — Next.js
 
-Site statique : HTML, CSS, JS, sans dépendance ni build.
+Refonte multipage en Next.js, React, TypeScript et Tailwind CSS.
 
-- `index.html` accueil · `tableaux.html` galerie par thème, avec le chapitre des pièces singulières · `tableau/<id>.html` une page par tableau (25, générées depuis `tableau.html`, chacune avec ses métadonnées de partage) · `pieces.html` pièces singulières (lien direct, hors menu) · `commander.html` commande en quatre pas · `atelier.html` l'atelier · `mentions-legales.html`
-- `encours.json` : la toile en cours (titre, thème, format, heures faites et prévues, photo, note, date). Modifiable sur GitHub depuis un téléphone, l'accueil et l'atelier suivent.
-- Sélection (cœurs) et tiroir « Écrire à Nathalie » sur toutes les pages, gérés par `nc.js`.
-- `RIBBON` en tête de `nc.js` : passer à `false` pour retirer le bandeau de maquette.
-- `nc.css` et `nc.js` sont partagés par toutes les pages (données des 25 tableaux dans `nc.js`, tableau `WORKS`).
-- `vercel.json` active les URLs propres (`/tableaux` sert `tableaux.html`).
+## Local
 
-## Déploiement
-Pousser sur Git, importer sur Vercel, aucun réglage de build : « Other », dossier racine.
+```bash
+npm ci
+npm run dev
+```
 
-## Tester en local
-Les chemins sont absolus (`/nc.css`), comme sur Vercel : ouvrir `index.html` par double-clic ne suffit pas. Dans le dossier : `npx serve .` puis http://localhost:3000, ou `vercel dev`.
+## Vérification
 
-## À faire avant la mise en ligne définitive
-- Photographier les 25 toiles en haute définition (3 000 px et plus, lumière rasante) : la loupe et « Voir le trait » en dépendent.
-- Valider avec l'artiste la fourchette de prix (`prix()` dans `nc.js`, 4 à 8 € par heure estimée) et l'estimation d'heures (`hrs()`).
-- Remplacer les photos de tableaux (actuellement chargées depuis l'ancien site Wix) par des fichiers locaux dans `/images`, et mettre à jour `src()` dans `nc.js`.
-- Les images d'ambiance de `/images` (portrait, atelier, toile en cours, salon, quatre temps) sont générées pour la maquette : à remplacer par de vraies photos de Nathalie quand elles existent, mêmes noms de fichiers. `encours.json` pointe sur `/images/toile-en-cours.jpg`.
-- Brancher le formulaire (Formspree, Netlify Forms ou un endpoint) : voir `form.form` dans `nc.js`.
-- Décider de l'affichage des tarifs, mettre à jour le domaine dans `robots.txt` et `sitemap.xml`.
+```bash
+npm run check
+```
+
+## Vercel
+
+Importer le dépôt avec le preset **Next.js**. La variable facultative `NEXT_PUBLIC_SITE_URL` définit le domaine utilisé par le sitemap et les métadonnées.
+
+## Avant publication
+
+- confirmer l’adresse e-mail qui reçoit les briefs dans `lib/site.ts` (`contact.email`, valeur provisoire) ;
+- remplacer les images de démonstration par les photographies originales haute définition ;
+- confirmer disponibilités, dimensions et tarifs avec Nathalie ;
+- compléter l’adresse et le SIRET dans les mentions légales ;
+- ajouter un canal de contact direct ou un formulaire conforme ;
+- actualiser les informations de la toile en cours.
+
+## Motion
+
+Le mouvement du site repose sur un petit kit sans dépendance, dans `components/motion/` et la section « MOTION KIT » de `app/globals.css`. C'est le même kit que sur les autres refontes, réglé ici sur un rythme plus lent.
+
+| Composant | Rôle | Type |
+| --- | --- | --- |
+| `Lines` | Révélation ligne par ligne d'un titre (masque + montée), CSS pur | serveur |
+| `InkStroke` | Anneau ou soulignement d'encre qui se dessine autour du mot accentué | serveur |
+| `Reveal` | Apparition au scroll (IntersectionObserver), cascade des enfants avec `stagger` | client |
+| `Counter` | Nombre qui monte de 0 à sa valeur en entrant dans le viewport | client |
+
+Classes utilitaires : `.hero-seq` (séquence d'entrée d'un hero, délais posés inline), `.anim-rise` / `.anim-scale` / `.anim-fade` (entrées au chargement), `.stagger-in` (cascade d'une grille), `.paper-card` (feuille qui se soulève au survol), `.float` (feuille qui flotte), `.bar-fill` (barre qui se remplit à l'apparition), `.parallax` (piloté par le scroll, ignoré si non supporté), `.animate-pop` (feedback).
+
+Principes :
+
+- les entrées « au chargement » sont en CSS pur et jouent avant l'hydratation ;
+- les entrées « au scroll » ne masquent rien tant que la classe `.js` (posée dans `app/layout.tsx`) n'est pas là ;
+- `prefers-reduced-motion` désactive parallax et flottement, dessine les traits immédiatement et affiche tout d'un coup ;
+- un grain papier très léger (`body::after`, image SVG statique) unifie les surfaces.
