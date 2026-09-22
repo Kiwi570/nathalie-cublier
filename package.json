@@ -1,0 +1,35 @@
+{
+  "name": "nathalie-cublier-artiste",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build --webpack",
+    "start": "next start",
+    "lint": "oxlint app components lib",
+    "typecheck": "tsc --noEmit",
+    "check": "npm run lint && npm run typecheck && npm run build",
+    "format": "oxfmt"
+  },
+  "dependencies": {
+    "lucide-react": "1.31.0",
+    "next": "16.3.5",
+    "react": "19.2.6",
+    "react-dom": "19.2.6"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "4.2.1",
+    "@types/node": "22.19.19",
+    "@types/react": "19.2.14",
+    "@types/react-dom": "19.2.3",
+    "oxfmt": "0.61.0",
+    "oxlint": "1.76.0",
+    "oxlint-tsgolint": "7.0.2001",
+    "tailwindcss": "4.2.1",
+    "typescript": "5.9.3"
+  },
+  "engines": {
+    "node": ">=22.0.0"
+  }
+}

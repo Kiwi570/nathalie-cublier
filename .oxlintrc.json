@@ -1,0 +1,11 @@
+{
+  "plugins": ["react", "react-hooks", "typescript", "unicorn", "oxc"],
+  "categories": { "correctness": "error", "suspicious": "warn", "perf": "warn" },
+  "rules": {
+    "react/react-in-jsx-scope": "off",
+    "react/jsx-no-target-blank": "error",
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn"
+  },
+  "ignorePatterns": [".next/**", "node_modules/**"]
+}

@@ -1,0 +1,200 @@
+@import 'tailwindcss';
+
+@theme inline {
+  --font-sans: var(--font-geist);
+  --font-serif: Georgia, 'Times New Roman', serif;
+  --color-paper: #faf9f5;
+  --color-mist: #efede7;
+  --color-stone: #d9d4ca;
+  --color-ink: #171716;
+  --color-vermilion: #a93d2d;
+  --color-clay: #c9a996;
+}
+
+* {
+  box-sizing: border-box;
+}
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 96px;
+}
+body {
+  min-width: 320px;
+  margin: 0;
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-geist), Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+a,
+button,
+input,
+textarea,
+select {
+  outline-color: var(--color-vermilion);
+}
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+::selection {
+  background: var(--color-ink);
+  color: var(--color-paper);
+}
+.skip-link {
+  position: fixed;
+  left: 1rem;
+  top: -5rem;
+  z-index: 100;
+  border-radius: 999px;
+  background: var(--color-ink);
+  color: white;
+  padding: 0.75rem 1rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+.skip-link:focus {
+  top: 1rem;
+}
+.nav-link {
+  position: relative;
+  padding-block: 0.5rem;
+  color: color-mix(in srgb, var(--color-ink) 58%, transparent);
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+.nav-link::after {
+  content: '';
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
+  height: 1px;
+  background: var(--color-vermilion);
+  transform: scaleX(0);
+  transition: transform 200ms ease;
+}
+.nav-link:hover,
+.nav-link.is-active {
+  color: var(--color-ink);
+}
+.nav-link:hover::after,
+.nav-link.is-active::after {
+  transform: scaleX(1);
+}
+.button-dark,
+.button-light,
+.button-line {
+  display: inline-flex;
+  min-height: 3rem;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  border-radius: 999px;
+  padding-inline: 1.25rem;
+  font-size: 0.82rem;
+  font-weight: 750;
+  transition:
+    transform 180ms ease,
+    background 180ms ease;
+}
+.button-dark {
+  background: var(--color-ink);
+  color: white;
+  border: 1px solid var(--color-ink);
+}
+.button-dark:hover {
+  background: var(--color-vermilion);
+  border-color: var(--color-vermilion);
+  transform: translateY(-1px);
+}
+.button-light {
+  background: white;
+  color: var(--color-ink);
+  border: 1px solid white;
+}
+.button-line {
+  border: 1px solid color-mix(in srgb, var(--color-ink) 18%, transparent);
+  color: var(--color-ink);
+}
+.button-line:hover {
+  background: white;
+  transform: translateY(-1px);
+}
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: var(--color-vermilion);
+  font-size: 0.62rem;
+  font-weight: 800;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+.eyebrow::before {
+  content: '';
+  width: 2.5rem;
+  height: 1px;
+  background: currentColor;
+}
+.footer-title {
+  font-size: 0.62rem;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-clay);
+}
+.shadow-paper {
+  box-shadow: 0 25px 70px rgba(23, 23, 22, 0.07);
+}
+.choice,
+.choice-dark {
+  border: 1px solid rgba(23, 23, 22, 0.14);
+  border-radius: 999px;
+  padding: 0.65rem 0.9rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  transition: all 180ms ease;
+}
+.choice:hover,
+.choice.is-on,
+.choice[aria-pressed='true'] {
+  background: var(--color-ink);
+  border-color: var(--color-ink);
+  color: white;
+}
+.choice-dark {
+  border-color: rgba(255, 255, 255, 0.15);
+  color: rgba(255, 255, 255, 0.62);
+}
+.choice-dark:hover,
+.choice-dark.is-on,
+.choice-dark[aria-pressed='true'] {
+  border-color: var(--color-clay);
+  background: rgba(255, 255, 255, 0.08);
+  color: white;
+}
+.stroke-bg {
+  background-image: repeating-linear-gradient(115deg, transparent 0 7px, rgba(23, 23, 22, 0.03) 7px 8px);
+}
+.page-enter {
+  animation: page-enter 420ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+@keyframes page-enter {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
